@@ -1,14 +1,14 @@
 #!/bin/bash
 # James Willson 3/20/2025
 
-# Set speaker and headphones (can be substring, just needs to be grep-able)
+# Set speaker and headphones (can be prefix)
 SPEAKER="alsa_output.pci-0000_12_00"
 HEADPHONES="alsa_output.pci-0000_17_00"
 MICROPHONE="alsa_input.pci-0000_17_00"
 
 ### Prints current sink (good for i3blocks)
 print_sink() {
-	if [ "1" = "$(pactl info | grep Sink | grep "alsa_output.pci-0000_17_00" | wc -l)" ]; then 
+	if (( $(pactl info | grep "Sink: $HEADPHONES" | wc -l) )); then 
 		echo "Headphones"
 	else
 		echo " Speakers "
@@ -27,19 +27,16 @@ print_sink() {
 
 ### sets audio to how I want it when I start my computer
 startup() {
-	pactl set-default-source $(pactl list sources short | grep "input" | grep $MICROPHONE | cut -d $'\t' -f 1)
-	pactl set-default-sink $(pactl list sinks short | grep "output" | grep $SPEAKER | cut -d $'\t' -f 1)
+	pactl set-default-source $(pactl list sources short | grep $MICROPHONE | cut -d $'\t' -f 1)
+	pactl set-default-sink $(pactl list sinks short | grep $SPEAKER | cut -d $'\t' -f 1)
 }
 
 ### Switcher
 toggle_sink() {
-	current="$(pactl info | grep Sink: | cut -d " " -f 3)"
-	if [ "1" = "$(pactl info | grep Sink: | grep $HEADPHONES | wc -l)" ]; then 
-		echo "$(pactl list sinks short | grep $SPEAKER | cut -d $'\t' -f 1)"
+	if (( $(pactl info | grep "Sink: $HEADPHONES" | wc -l) )); then 
 		pactl set-default-sink "$(pactl list sinks short | grep $SPEAKER | cut -d $'\t' -f 1)"
 		echo "Switched to speakers"
 	else
-		echo "$(pactl list sinks short | grep $HEADPHONES | cut -d $'\t' -f 1)"
 		pactl set-default-sink "$(pactl list sinks short | grep $HEADPHONES | cut -d $'\t' -f 1)"
 		echo "Switched to headphones"
 	fi
