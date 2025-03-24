@@ -7,11 +7,12 @@ HEADPHONES="alsa_output.pci-0000_17_00.6.analog-stereo"
 MICROPHONE="alsa_input.pci-0000_17_00.6.analog-stereo"
 
 volume() {
-	pactl get-sink-volume $1 | head -1 | cut -d "/" -f 2 | tr -d '% '
+	[[ $muted = "Mute: yes" ]] || pactl get-sink-volume $1 | head -1 | cut -d "/" -f 2 | tr -d '% '
 }
 
 ### Prints current sink (good for i3blocks)
 print_sink() {
+	muted="$(pactl get-sink-mute @DEFAULT_SINK@)"
 	if (( $(pactl info | grep "Sink: $HEADPHONES" | wc -l) )); then 
 		printf "Headphones%3.2d%%\n" "$(volume $HEADPHONES)"
 	else
@@ -19,7 +20,7 @@ print_sink() {
 	fi
 
 	# print red on mute
-	if [ "$(pactl get-sink-mute @DEFAULT_SINK@)" = "Mute: yes" ]; then
+	if [ "$muted" = "Mute: yes" ]; then
 		echo ""
 		echo '#BF616A'
 	fi
