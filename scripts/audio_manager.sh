@@ -1,27 +1,27 @@
 #!/bin/bash
 # James Willson 3/20/2025
 
-# Set speaker and headphones (can be prefix)
-SPEAKER="alsa_output.pci-0000_12_00"
-HEADPHONES="alsa_output.pci-0000_17_00"
-MICROPHONE="alsa_input.pci-0000_17_00"
+# Set speaker and headphones
+SPEAKER="alsa_output.pci-0000_12_00.0.analog-stereo"
+HEADPHONES="alsa_output.pci-0000_17_00.6.analog-stereo"
+MICROPHONE="alsa_input.pci-0000_17_00.6.analog-stereo"
+
+volume() {
+	pactl get-sink-volume $1 | head -1 | cut -d "/" -f 2 | tr -d '% '
+}
 
 ### Prints current sink (good for i3blocks)
 print_sink() {
 	if (( $(pactl info | grep "Sink: $HEADPHONES" | wc -l) )); then 
-		echo "Headphones"
+		printf "Headphones%3.2d%%\n" "$(volume $HEADPHONES)"
 	else
-		echo " Speakers "
+		printf "  Speakers%3.2d%%\n" "$(volume $SPEAKER)"
 	fi
 
 	# print red on mute
 	if [ "$(pactl get-sink-mute @DEFAULT_SINK@)" = "Mute: yes" ]; then
 		echo ""
-		# echo '#FF0000'
 		echo '#BF616A'
-	else
-		# echo ""
-		echo '#00FF00'
 	fi
 }
 
