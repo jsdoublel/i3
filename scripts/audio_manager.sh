@@ -7,38 +7,40 @@ HEADPHONES="alsa_output.pci-0000_17_00.6.analog-stereo"
 MICROPHONE="alsa_input.pci-0000_17_00.6.analog-stereo"
 
 volume() {
-	[[ $muted = "Mute: yes" ]] || pactl get-sink-volume $1 | head -1 | cut -d "/" -f 2 | tr -d '% '
+	pactl get-sink-volume $1 | head -1 | cut -d "/" -f 2 | tr -d '% '
 }
 
 ### Prints current sink (good for i3blocks)
 print_sink() {
-	muted="$(pactl get-sink-mute @DEFAULT_SINK@)"
 	if (( $(pactl info | grep "Sink: $HEADPHONES" | wc -l) )); then 
-		printf "Headphones%3.2d%%\n" "$(volume $HEADPHONES)"
+		printf "%3.2d%% Headphones\n\n" "$(volume $HEADPHONES)"
 	else
-		printf "  Speakers%3.2d%%\n" "$(volume $SPEAKER)"
+		printf "%3.2d%% Speakers  \n\n" "$(volume $SPEAKER)"
 	fi
+	[[ "$(pactl get-sink-mute @DEFAULT_SINK@)" = "Mute: yes" ]] && echo '#BF616A'
+}
 
-	# print red on mute
-	if [ "$muted" = "Mute: yes" ]; then
-		echo ""
-		echo '#BF616A'
-	fi
+switch_to_sink() {
+	pactl set-default-sink "$(pactl list sinks short | grep $1 | cut -d $'\t' -f 1)"
+}
+
+switch_to_source() {
+	pactl set-default-source $(pactl list sources short | grep $1 | cut -d $'\t' -f 1)
 }
 
 ### sets audio to how I want it when I start my computer
 startup() {
-	pactl set-default-source $(pactl list sources short | grep $MICROPHONE | cut -d $'\t' -f 1)
-	pactl set-default-sink $(pactl list sinks short | grep $SPEAKER | cut -d $'\t' -f 1)
+	switch_to_source $MICROPHONE
+	switch_to_sink $SPEAKER
 }
 
 ### Switcher
 toggle_sink() {
 	if (( $(pactl info | grep "Sink: $HEADPHONES" | wc -l) )); then 
-		pactl set-default-sink "$(pactl list sinks short | grep $SPEAKER | cut -d $'\t' -f 1)"
+		switch_to_sink $SPEAKER
 		echo "Switched to speakers"
 	else
-		pactl set-default-sink "$(pactl list sinks short | grep $HEADPHONES | cut -d $'\t' -f 1)"
+		switch_to_sink $HEADPHONES
 		echo "Switched to headphones"
 	fi
 }
