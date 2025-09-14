@@ -199,7 +199,7 @@ bindsym $mod+Mod1+Ctrl+h resize grow width 1 px or 1 ppt
 ######################################
 
 # start a terminal
-bindsym $mod+Return exec --no-startup-id kitty
+bindsym $mod+BackSpace exec --no-startup-id kitty
 
 # start terminal with tmux
 bindsym $mod+t exec --no-startup-id kitty ltmux
@@ -208,6 +208,7 @@ bindsym $mod+t exec --no-startup-id kitty ltmux
 # start terminal with nvim
 bindsym $mod+v exec --no-startup-id kitty ltmux -v
 #, exec --no-startup-id ~/.config/i3/scripts/i3-new-workspace -c
+bindsym $mod+y exec --no-startup-id kitty ltmux -t
 
 # start terminal with ssh-ing into the campus cluster
 bindsym $mod+c exec --no-startup-id kitty ~/.config/i3/scripts/launch_cc.sh
@@ -217,14 +218,15 @@ bindsym $mod+c exec --no-startup-id kitty ~/.config/i3/scripts/launch_cc.sh
 bindsym $mod+q kill
 
 # exit-menu
-bindsym $mod+Shift+e exec --no-startup-id ~/.config/rofi/powermenu.sh
+bindsym $mod+o exec --no-startup-id ~/.config/rofi/powermenu.sh
 
 # Lock the system
 # lock with a picture:
 # bindsym $mod+o exec --no-startup-id i3lock 
 #-i ~/Pictures/Wallpaper/bnw_nebula.png 
 # lock by blurring the screen:
-bindsym $mod+o exec --no-startup-id ~/.config/i3/scripts/blur-lock
+bindsym $mod+Shift+o exec --no-startup-id $I3_SCRIPTS/blur-lock
+# bindsym $mod+Shift+o exec --no-startup-id ~/.config/i3/scripts/blur-lock
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -236,7 +238,7 @@ bindsym $mod+Shift+r restart
 bindsym $mod+Shift+g exec --no-startup-id openrgb -p profile
 
 # reload caps-to-esc
-bindsym $mod+Shift+semicolon exec --no-startup-id /usr/bin/setxkbmap -option caps:escape
+# bindsym $mod+Shift+semicolon exec --no-startup-id /usr/bin/setxkbmap -option caps:escape
 
 # keybinding in fancy rofi (automated):
 # bindsym F1 exec --no-startup-id ~/.config/i3/scripts/keyhint-2
@@ -279,7 +281,7 @@ bindsym $mod+Shift+Right move right
 bindsym $mod+semicolon split h
 
 # split in vertical orientation
-bindsym $mod+minus split v
+bindsym $mod+slash split v
 
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
@@ -303,9 +305,15 @@ bindsym $mod+Shift+n exec --no-startup-id ~/.config/i3/scripts/empty_workspace
 
 # Multiple monitor bindings
 # bindsym $mod+s exec ~/.config/i3/scripts/i3-display-swap.sh
-bindsym $mod+r move workspace to output right
+bindsym --release $mod+r move workspace to output right; focus output left
 
 # Multimedia Keys
+## New volumn configuration for Kinesis keyboard
+bindsym $mod+minus exec --no-startup-id ~/.config/i3/scripts/volume_brightness.sh volume_mute
+bindsym $mod+backslash exec --no-startup-id ~/.config/i3/scripts/volume_brightness.sh volume_up 5
+bindsym $mod+apostrophe exec --no-startup-id ~/.config/i3/scripts/volume_brightness.sh volume_down 5
+bindsym $mod+Shift+backslash exec --no-startup-id ~/.config/i3/scripts/volume_brightness.sh volume_up
+bindsym $mod+Shift+apostrophe exec --no-startup-id ~/.config/i3/scripts/volume_brightness.sh volume_down
 
 # toggle between headphones and speakers
 bindsym $mod+a exec --no-startup-id ~/.config/i3/scripts/audio_manager.sh -t
@@ -317,6 +325,7 @@ bindsym $mod+a exec --no-startup-id ~/.config/i3/scripts/audio_manager.sh -t
 # use meta keys showing osc using dunst
 bindsym XF86AudioRaiseVolume exec --no-startup-id ~/.config/i3/scripts/volume_brightness.sh volume_up
 bindsym XF86AudioLowerVolume exec --no-startup-id ~/.config/i3/scripts/volume_brightness.sh volume_down
+
 
 # gradular volume control
 bindsym $mod+XF86AudioRaiseVolume exec --no-startup-id amixer -D pulse sset Master 1%+ && pkill -RTMIN+1 i3blocks
@@ -345,15 +354,14 @@ bindsym $mod+w exec --no-startup-id /usr/bin/firefox
 bindsym $mod+n exec --no-startup-id /usr/bin/thunar
 bindsym Print exec --no-startup-id flameshot screen -r > ~/Pictures/Screenshots/$(date +"%Y-%m-%d-%T")-screenshot.png && notify-send "Screenshot saved to ~/Pictures/Screenshots/$(date +"%Y-%m-%d-%T")-screenshot.png"
 bindsym $mod+m exec --no-startup-id prismlauncher
-bindsym $mod+y exec --no-startup-id youtube-music
+# bindsym $mod+m exec --no-startup-id /usr/bin/thunderbird
+# bindsym $mod+y exec --no-startup-id youtube-music
 # Power Profiles menu switcher (rofi)
 # bindsym $mod+Shift+p exec --no-startup-id ~/.config/i3/scripts/power-profiles
 
 ##########################################
 # configuration for workspace behaviour: #
 ##########################################
-exec --no-startup-id xrandr --output DP-2 --primary
-exec --no-startup-id xrandr --output DP-4 --right-of DP-2
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
@@ -373,6 +381,8 @@ set $disp1 "DP-2"
 set $disp2 "DP-4"
 
 workspace $ws3 output $disp2
+workspace $ws7 output $disp2
+workspace $ws9 output $disp2
 workspace $ws4 output $disp1
 # workspace $ws2 output $disp2
 
@@ -390,6 +400,9 @@ assign [class="(?i)code"] $ws5
 assign [class="(?i)Minecraft"] $ws4
 assign [class="PrismLauncher"] $ws5
 assign [class="(?i)zoom"] $ws6
+assign [class="(?i)thunderbird"] $ws7
+assign [class="Slack"] $ws9
+# assign [class="(?i)libreoffice"] $ws4
 # assign [class="Thunar"] $ws3
 # assign [class="thunderbird"] $ws4
 # assign [class="TelegramDesktop"] $ws5
@@ -400,11 +413,15 @@ for_window [class=(?i)google-chrome] focus
 for_window [class=(?i)firefox] focus
 for_window [class=(?i)steam_app_] focus
 for_window [class=steam] focus
-for_window [class=(?i)zoom] focus
+# for_window [class=(?i)zoom] focus
 for_window [class=PrismLauncher] focus
 for_window [class=(?i)minecraft] focus
 for_window [class=(?i)code] focus
 for_window [class=(?i)jetbrains-studio] focus
+for_window [class=(?i)thunderbird] focus
+for_window [class="Slack"] focus
+for_window [instance="libreoffice"] move container to workspace $ws4
+for_window [instance="libreoffice"] focus
 
 # launch in full screen
 # for_window [class=discord] fullscreen enable
@@ -450,7 +467,7 @@ exec_always --no-startup-id picom --no-frame-pacing --config  ~/.config/picom.co
 #############################################
 
 #get auth work with polkit-gnome
-exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+# exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 
 # dex execute .desktop files + apps using /etc/xdg/autostart.
 # when second to i3 a DE is installed or mixed usage of i3 + xfce4 or GNOME
@@ -459,12 +476,13 @@ exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 # https://github.com/jceb/dex
 #exec --no-startup-id dex -a -s /etc/xdg/autostart/:~/.config/autostart/
 exec --no-startup-id dex --autostart --environment i3
+exec --no-startup-id blueman-applet
 
 # start welcome app
 #exec --no-startup-id sh /usr/share/endeavouros/scripts/welcome --startdelay=3 
 
 # capslock to esc
-exec --no-startup-id /usr/bin/setxkbmap -option "caps:escape_shifted_capslock"
+# exec --no-startup-id /usr/bin/setxkbmap -option "caps:escape"
 # num lock activated
 exec --no-startup-id numlockx on
 
@@ -476,7 +494,9 @@ exec --no-startup-id numlockx on
 
 # start a script to setup displays
 # uncomment the next line, use arandr to setup displays and save the file as monitor:
-exec --no-startup-id ~/.screenlayout/monitor.sh
+# exec --no-startup-id /home/jsdoublel/.screenlayout/monitor.sh
+exec --no-startup-id xrandr --output DP-2 --primary
+exec --no-startup-id xrandr --output DP-4 --right-of DP-2
 
 # set wallpaper
 # exec --no-startup-id sleep 2 && nitrogen --restore
@@ -485,6 +505,7 @@ exec --no-startup-id sleep 1 && feh --bg-fill /home/jsdoublel/Pictures/Wallpaper
 
 # set powersavings for display:
 exec --no-startup-id xset s 900 dpms 600 600 600
+exec --no-startup-id caffene
 
 # disable power saving (for example if using xscreensaver)
 #exec --no-startup-id xset -dpms
@@ -518,6 +539,8 @@ exec --no-startup-id openrgb -p profile
 # exec --no-startup-id sleep 2 && kitty
 # exec --no-startup-id sleep 2 && google-chrome-stable
 exec --no-startup-id sleep 2 && discord
+exec --no-startup-id sleep 3 && slack
+exec --no-startup-id sleep 4 && /usr/bin/thunderbird
 # exec --no-startup-id sleep 5 && steam -silent
 # exec --no-startup-id sleep 7 && google-chrome-stable https://github.com/endeavouros-team/endeavouros-i3wm-setup/blob/main/force-knowledge.md
 #exec --no-startup-id sleep 3 && thunar
@@ -529,7 +552,7 @@ exec --no-startup-id sleep 2 && discord
 # you need to have tray apps started manually one by one:
 
 # start blueberry app for managing bluetooth devices from tray:
-#exec --no-startup-id blueberry-tray
+# exec --no-startup-id blueberry-tray
 
 # networkmanager-applet
 #exec --no-startup-id nm-applet
@@ -542,6 +565,7 @@ exec --no-startup-id sleep 2 && discord
 ##################
 
 # set floating (nontiling) for apps needing it
+for_window [class="R_x11" instance="r_x11"] floating enable
 for_window [class="Yad" instance="yad"] floating enable
 for_window [class="Galculator" instance="galculator"] floating enable
 for_window [class="Blueberry.py" instance="blueberry.py"] floating enable
@@ -584,6 +608,7 @@ set $purple		#e345ff
 set $darkgrey		#333333
 set $grey		#b0b5bd
 set $mediumgrey		#8b8b8b
+set $lightgrey		#d4d4d4
 set $yellowbrown	#e1b700
 
 # define colors for windows:

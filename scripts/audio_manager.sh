@@ -1,19 +1,23 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # James Willson 3/20/2025
 
 # Set speaker and headphones
 SPEAKER="alsa_output.pci-0000_12_00.0.analog-stereo"
 HEADPHONES="alsa_output.pci-0000_17_00.6.analog-stereo"
 MICROPHONE="alsa_input.pci-0000_17_00.6.analog-stereo"
+BLUETOOTH="bluez_output.E4_58_BC_2C_E3_F1.1"
+BLUEPHONE="bluez_input.E4:58:BC:2C:E3:F1"
 
 volume() {
-	pactl get-sink-volume $1 | head -1 | cut -d "/" -f 2 | tr -d '% '
+	pactl get-sink-volume "$1" | head -1 | cut -d "/" -f 2 | tr -d '% '
 }
 
 ### Prints current sink (good for i3blocks)
 print_sink() {
-	if (( $(pactl info | grep "Sink: $HEADPHONES" | wc -l) )); then 
+	if (( $(pactl info | grep -c "Sink: $HEADPHONES") )); then 
 		printf "%3.2d%% Headphones\n\n" "$(volume $HEADPHONES)"
+	elif (( $(pactl info | grep -c "Sink: $BLUETOOTH") )); then 
+		printf "%3.2d%% Bluetooth \n\n" "$(volume $BLUETOOTH)"
 	else
 		printf "%3.2d%% Speakers  \n\n" "$(volume $SPEAKER)"
 	fi
@@ -21,11 +25,11 @@ print_sink() {
 }
 
 switch_to_sink() {
-	pactl set-default-sink "$(pactl list sinks short | grep $1 | cut -d $'\t' -f 1)"
+	pactl set-default-sink "$(pactl list sinks short | grep "$1" | cut -d $'\t' -f 1)"
 }
 
 switch_to_source() {
-	pactl set-default-source $(pactl list sources short | grep $1 | cut -d $'\t' -f 1)
+	pactl set-default-source "$(pactl list sources short | grep "$1" | cut -d $'\t' -f 1)"
 }
 
 ### sets audio to how I want it when I start my computer
@@ -36,12 +40,19 @@ startup() {
 
 ### Switcher
 toggle_sink() {
-	if (( $(pactl info | grep "Sink: $HEADPHONES" | wc -l) )); then 
+	if (( $(pactl info | grep -c "Sink: $SPEAKER") )); then 
+		if (( $(pactl list sinks short | grep -c $BLUETOOTH) )); then
+			switch_to_sink $BLUETOOTH
+			switch_to_source $BLUEPHONE
+			echo "Switched to bluetooth"
+		else
+			switch_to_sink $HEADPHONES
+			switch_to_source $MICROPHONE
+			echo "Switched to headphones"
+		fi
+	else
 		switch_to_sink $SPEAKER
 		echo "Switched to speakers"
-	else
-		switch_to_sink $HEADPHONES
-		echo "Switched to headphones"
 	fi
 }
 

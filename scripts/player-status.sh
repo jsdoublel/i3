@@ -1,20 +1,24 @@
 #!/bin/bash
 # James Willson 3/23/2025
 
-escape_markup() {
-	sed -e 's/&/\&amp;/g' -e 's/</\&lt;/g' -e 's/>/\&gt;/g'
+MAX_LEN=40
+
+trunc() { # use ... instead of elipse character you get from playerctl trunc
+	data=$(playerctl metadata --format "{{markup_escape($1)}}")
+	(( ${#data} >= $MAX_LEN )) && echo "$(echo $data | head -c $MAX_LEN)..." || echo "$data"
 }
 
-parse_meta() {
-	playerctl metadata | grep $1 | sed "s/.*$1[ \t]*//"
+progress() {
+	playerctl metadata --format '{{duration(position)}}/{{duration(mpris:length)}}'
 }
 
 print_status() {
 	status="$(playerctl status)"
 	[[ -z $status ]] && exit 1
-	artist="$(parse_meta "artist" | escape_markup)"
-	title="$(parse_meta "title" | escape_markup)"
-	album="$(parse_meta "album" | escape_markup)"
+	printf "%s (%s) " ${status^^} $(progress)
+	artist="$(trunc "artist")"
+	title="$(trunc "title")"
+	album="$(trunc "album")"
 	printf "%s - %s" "$artist" "$title"
 	[[ -z "$album" ]] || printf " (%s)" "$album"
 	printf "\n\n"
