@@ -149,7 +149,7 @@ bindsym $mod+t exec --no-startup-id kitty ltmux
 
 # start terminal with nvim
 bindsym $mod+v exec --no-startup-id kitty ltmux -v
-bindsym $mod+y exec --no-startup-id kitty ltmux -t
+bindsym $mod+y exec --no-startup-id kitty ltmux -f
 
 # kill focused window
 bindsym $mod+q kill
