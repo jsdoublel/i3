@@ -267,7 +267,8 @@ bindsym XF86AudioPrev exec --no-startup-id playerctl previous
 ## App shortcuts
 # bindsym $mod+w exec --no-startup-id /usr/bin/google-chrome-stable
 # bindsym $mod+w exec --no-startup-id /usr/bin/firefox
-bindsym $mod+w exec --no-startup-id /usr/bin/zen-browser
+# bindsym $mod+w exec --no-startup-id /usr/bin/zen-browser
+bindsym $mod+w exec --no-startup-id /usr/bin/helium-browser
 bindsym $mod+n exec --no-startup-id /usr/bin/thunar
 bindsym $mod+Shift+s exec --no-startup-id flameshot screen -r > ~/Pictures/Screenshots/$(date +"%Y-%m-%d-%T")-screenshot.png && notify-send "Screenshot saved to ~/Pictures/Screenshots/$(date +"%Y-%m-%d-%T")-screenshot.png"
 bindsym $mod+m exec --no-startup-id prismlauncher
@@ -304,6 +305,7 @@ assign [class="kitty"] $ws1
 assign [class="(?i)google-chrome"] $ws2
 assign [class="(?i)firefox"] $ws2
 assign [class="(?i)zen"] $ws2
+assign [class="(?i)Helium"] $ws2
 assign [class="discord"] $ws3
 assign [class="(?i)steam_app_"] $ws4
 assign [class="steam"] $ws5
@@ -320,6 +322,7 @@ for_window [class=kitty] focus
 for_window [class=(?i)google-chrome] focus
 for_window [class=(?i)firefox] focus
 for_window [class=(?i)zen] focus
+for_window [class=(?i)Helium] focus
 for_window [class=(?i)steam_app_] focus
 for_window [class=steam] focus
 for_window [class=PrismLauncher] focus
