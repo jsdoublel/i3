@@ -20,7 +20,7 @@ print_status() {
 	title="$(trunc "title")"
 	album="$(trunc "album")"
 	printf "%s - %s" "$artist" "$title"
-	[[ -z "$album" ]] || printf " %s]" "$album"
+	[[ -z "$album" ]] || printf " [%s]" "$album"
 	printf "\n\n"
 	[[ $status = "Paused" ]] && echo '#BF616A'
 }
