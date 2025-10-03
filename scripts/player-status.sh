@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # James Willson 3/23/2025
 
-MAX_LEN=35
+MAX_LEN=30
 
 trunc() { # use ... instead of elipse character you get from playerctl trunc
 	data=$(playerctl metadata --format "{{markup_escape($1)}}")
@@ -20,7 +20,7 @@ print_status() {
 	title="$(trunc "title")"
 	album="$(trunc "album")"
 	printf "%s - %s" "$artist" "$title"
-	[[ -z "$album" ]] || printf " [%s]" "$album"
+	[[ -z "$album" || $(( ${#artist} + ${#title} > MAX_LEN )) ]] || printf " [%s]" "$album"
 	printf '<span foreground="#FFFFFF"> ||</span>'
 	printf "\n\n"
 	[[ $status = "Paused" ]] && echo '#BF616A'
