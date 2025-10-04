@@ -11,4 +11,9 @@ trunc() { # use ... instead of elipse character you get from playerctl trunc
 name=$(xdotool getwindowfocus getwindowname)
 class=$(xdotool getwindowfocus getwindowclassname)
 [[ -n $class && "${name^^}" == *"${class^^}" ]] && name=${name% -*}
-[[ -z $class ]] || printf '%s [%s]\n' "${class^^}" "$(trunc "$name")"
+if [[ ! -z $class ]]; then  
+	printf '%s' "${class^^}" 
+	[[ "${name^^}" != "${class^^}" ]] && printf ' [%s]' "$(trunc "$name")"
+fi
+printf '\n'
+

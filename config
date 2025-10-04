@@ -127,15 +127,15 @@ bindcode $mod+Shift+81 	 move container to workspace  $ws9
 bindcode $mod+Shift+90 	 move container to workspace  $ws10
 
 # resize window bindings
-bindsym $mod+Mod1+Ctrl+Right resize shrink width 1 px or 1 ppt
-bindsym $mod+Mod1+Ctrl+Up resize grow height 1 px or 1 ppt
-bindsym $mod+Mod1+Ctrl+Down resize shrink height 1 px or 1 ppt
-bindsym $mod+Mod1+Ctrl+Left resize grow width 1 px or 1 ppt
+bindsym $mod+Ctrl+Right resize shrink width 1 px or 1 ppt
+bindsym $mod+Ctrl+Up resize grow height 1 px or 1 ppt
+bindsym $mod+Ctrl+Down resize shrink height 1 px or 1 ppt
+bindsym $mod+Ctrl+Left resize grow width 1 px or 1 ppt
 
-bindsym $mod+Mod1+Ctrl+l resize shrink width 1 px or 1 ppt
-bindsym $mod+Mod1+Ctrl+k resize grow height 1 px or 1 ppt
-bindsym $mod+Mod1+Ctrl+j resize shrink height 1 px or 1 ppt
-bindsym $mod+Mod1+Ctrl+h resize grow width 1 px or 1 ppt
+bindsym $mod+Ctrl+l resize shrink width 1 px or 1 ppt
+bindsym $mod+Ctrl+k resize grow height 1 px or 1 ppt
+bindsym $mod+Ctrl+j resize shrink height 1 px or 1 ppt
+bindsym $mod+Ctrl+h resize grow width 1 px or 1 ppt
 
 ######################################
 # keybindings for different actions: #
