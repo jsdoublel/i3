@@ -14,13 +14,13 @@ progress() {
 
 print_status() {
 	status="$(playerctl status)"
-    [[ -z $status || "$status" == "Stopped" ]] && (printf ' \n'; exit 0) # \n makes player spacing persistant
+	[[ -z $status || "$status" == "Stopped" ]] && { printf ' \n'; exit 0; } # \n makes player wiget persistant (for spacing)
 	printf "%s {%s} " "${status^^}" "$(progress)"
 	artist="$(trunc "artist")"
 	title="$(trunc "title")"
 	album="$(trunc "album")"
 	printf "%s - %s" "$artist" "$title"
-	[[ -z "$album" || $(( ${#artist} + ${#title} > MAX_LEN )) ]] || printf " [%s]" "$album"
+	[[ ! -z "$album" ]] && (( ${#artist} + ${#title} < MAX_LEN ))  && printf " [%s]" "$album"
 	printf '<span foreground="#FFFFFF"> ||</span>'
 	printf "\n\n"
 	[[ $status = "Paused" ]] && echo '#BF616A'
