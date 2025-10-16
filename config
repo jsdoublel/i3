@@ -32,7 +32,7 @@ workspace_layout default
 ##############################
 
 #border indicator on windows:
-new_window pixel 1
+# new_window pixel 1
 default_border pixel 3
 
 # thin borders
@@ -55,40 +55,40 @@ bindsym $mod+Tab workspace next
 bindsym $mod+Shift+Tab workspace prev
 
 # switch to workspace
-bindcode $mod+10 workspace  $ws1; move workspace to output primary
-bindcode $mod+11 workspace  $ws2; move workspace to output primary
-bindcode $mod+12 workspace  $ws3; move workspace to output primary
-bindcode $mod+13 workspace  $ws4; move workspace to output primary
-bindcode $mod+14 workspace  $ws5; move workspace to output primary
-bindcode $mod+15 workspace  $ws6; move workspace to output primary
-bindcode $mod+16 workspace  $ws7; move workspace to output primary
-bindcode $mod+17 workspace  $ws8; move workspace to output primary
-bindcode $mod+18 workspace  $ws9; move workspace to output primary
-bindcode $mod+19 workspace  $ws10; move workspace to output primary
+bindcode $mod+10 workspace  $ws1; move workspace to output primary; focus output primary
+bindcode $mod+11 workspace  $ws2; move workspace to output primary; focus output primary
+bindcode $mod+12 workspace  $ws3; move workspace to output primary; focus output primary
+bindcode $mod+13 workspace  $ws4; move workspace to output primary; focus output primary
+bindcode $mod+14 workspace  $ws5; move workspace to output primary; focus output primary
+bindcode $mod+15 workspace  $ws6; move workspace to output primary; focus output primary
+bindcode $mod+16 workspace  $ws7; move workspace to output primary; focus output primary
+bindcode $mod+17 workspace  $ws8; move workspace to output primary; focus output primary
+bindcode $mod+18 workspace  $ws9; move workspace to output primary; focus output primary
+bindcode $mod+19 workspace  $ws10; move workspace to output primary; focus output primary
 
 # switch to workspace with numpad keys
-bindcode $mod+87 workspace $ws1; move workspace to output primary
-bindcode $mod+88 workspace $ws2; move workspace to output primary
-bindcode $mod+89 workspace $ws3; move workspace to output primary
-bindcode $mod+83 workspace $ws4; move workspace to output primary
-bindcode $mod+84 workspace $ws5; move workspace to output primary
-bindcode $mod+85 workspace $ws6; move workspace to output primary
-bindcode $mod+79 workspace $ws7; move workspace to output primary
-bindcode $mod+80 workspace $ws8; move workspace to output primary
-bindcode $mod+81 workspace $ws9; move workspace to output primary
-bindcode $mod+90 workspace $ws10; move workspace to output primary
+bindcode $mod+87 workspace $ws1; move workspace to output primary; focus output primary
+bindcode $mod+88 workspace $ws2; move workspace to output primary; focus output primary
+bindcode $mod+89 workspace $ws3; move workspace to output primary; focus output primary
+bindcode $mod+83 workspace $ws4; move workspace to output primary; focus output primary
+bindcode $mod+84 workspace $ws5; move workspace to output primary; focus output primary
+bindcode $mod+85 workspace $ws6; move workspace to output primary; focus output primary
+bindcode $mod+79 workspace $ws7; move workspace to output primary; focus output primary
+bindcode $mod+80 workspace $ws8; move workspace to output primary; focus output primary
+bindcode $mod+81 workspace $ws9; move workspace to output primary; focus output primary
+bindcode $mod+90 workspace $ws10; move workspace to output primary; focus output primary
 
 # switch to workspace with numlock numpad keys
-bindcode $mod+Mod2+87 workspace $ws1; move workspace to output primary
-bindcode $mod+Mod2+88 workspace $ws2; move workspace to output primary
-bindcode $mod+Mod2+89 workspace $ws3; move workspace to output primary
-bindcode $mod+Mod2+83 workspace $ws4; move workspace to output primary
-bindcode $mod+Mod2+84 workspace $ws5; move workspace to output primary
-bindcode $mod+Mod2+85 workspace $ws6; move workspace to output primary
-bindcode $mod+Mod2+79 workspace $ws7; move workspace to output primary
-bindcode $mod+Mod2+80 workspace $ws8; move workspace to output primary
-bindcode $mod+Mod2+81 workspace $ws9; move workspace to output primary
-bindcode $mod+Mod2+90 workspace $ws10; move workspace to output primary
+bindcode $mod+Mod2+87 workspace $ws1; move workspace to output primary; focus output primary
+bindcode $mod+Mod2+88 workspace $ws2; move workspace to output primary; focus output primary
+bindcode $mod+Mod2+89 workspace $ws3; move workspace to output primary; focus output primary
+bindcode $mod+Mod2+83 workspace $ws4; move workspace to output primary; focus output primary
+bindcode $mod+Mod2+84 workspace $ws5; move workspace to output primary; focus output primary
+bindcode $mod+Mod2+85 workspace $ws6; move workspace to output primary; focus output primary
+bindcode $mod+Mod2+79 workspace $ws7; move workspace to output primary; focus output primary
+bindcode $mod+Mod2+80 workspace $ws8; move workspace to output primary; focus output primary
+bindcode $mod+Mod2+81 workspace $ws9; move workspace to output primary; focus output primary
+bindcode $mod+Mod2+90 workspace $ws10; move workspace to output primary; focus output primary
 
 # move focused container to workspace
 bindcode $mod+Shift+10    move container to workspace  $ws1
