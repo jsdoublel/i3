@@ -10,6 +10,7 @@
 font pango:Go Mono 10
 
 # set the mod key to the winkey:
+set $alt Mod1
 set $mod Mod4
 
 #####################
@@ -223,7 +224,7 @@ bindsym $mod+Shift+a focus parent
 bindsym $mod+Shift+n exec --no-startup-id $I3_SCRIPTS/empty_workspace
 
 # Multiple monitor bindings
-bindsym --release $mod+r move workspace to output right; focus output left
+bindsym --release $mod+r move workspace to output right; focus output primary
 
 # Multimedia Keys
 ## New volumn configuration for Kinesis keyboard
@@ -270,6 +271,8 @@ bindsym $mod+w exec --no-startup-id /usr/bin/helium-browser
 bindsym $mod+n exec --no-startup-id /usr/bin/thunar
 bindsym $mod+Shift+s exec --no-startup-id flameshot screen -r > ~/Pictures/Screenshots/$(date +"%Y-%m-%d-%T")-screenshot.png && notify-send "Screenshot saved to ~/Pictures/Screenshots/$(date +"%Y-%m-%d-%T")-screenshot.png"
 bindsym $mod+m exec --no-startup-id prismlauncher
+
+bindsym $mod+$alt+h exec --no-startup-id dunstctl history-pop
 
 ##########################################
 # configuration for workspace behaviour: #

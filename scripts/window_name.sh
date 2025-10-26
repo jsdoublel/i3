@@ -13,8 +13,8 @@ trunc() {
 
 # name=$(xdotool getwindowname "$wid" 2>/dev/null | iconv -f UTF-8 -t ASCII -c)
 # class=$(xdotool getwindowclassname "$wid" 2>/dev/null | iconv -f UTF-8 -t ASCII -c)
-name=$(i3-msg -t get_tree | jq -r '.. | objects | select(.focused? == true) | .name')
-class=$(i3-msg -t get_tree | jq -r '.. | objects | select(.focused? == true) | .window_properties.class')
+name=$(i3-msg -t get_tree | jq -r '.. | objects | select(.focused? == true) | .name' | iconv -f UTF-8 -t ASCII -c)
+class=$(i3-msg -t get_tree | jq -r '.. | objects | select(.focused? == true) | .window_properties.class' | iconv -f UTF-8 -t ASCII -c)
 [[ -z $name && -z $class ]] && exit 0
 
 [[ -n $class && "${name^^}" == *"${class^^}" ]] && name=${name% -*}
