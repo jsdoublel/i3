@@ -13,6 +13,11 @@ font pango:Go Mono 10
 set $alt Mod1
 set $mod Mod4
 
+# directory variables
+set $config $XDG_CONFIG_HOME
+set $scripts $XDG_CONFIG_HOME/i3/scripts
+set $screenshots ~/Pictures/Screenshots
+
 #####################
 # workspace layout: #
 #####################
@@ -156,10 +161,10 @@ bindsym $mod+y exec --no-startup-id kitty ltmux -f
 bindsym $mod+q kill
 
 # exit-menu
-bindsym $mod+o exec --no-startup-id ~/.config/rofi/powermenu.sh
+bindsym $mod+o exec --no-startup-id $config/rofi/powermenu.sh
 
 # Lock the system
-bindsym $mod+Shift+o exec --no-startup-id $I3_SCRIPTS/blur-lock
+bindsym $mod+Shift+o exec --no-startup-id $scripts/blur-lock
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -221,25 +226,25 @@ bindsym $mod+space focus mode_toggle
 bindsym $mod+Shift+a focus parent
 
 # open new empty workspace
-bindsym $mod+Shift+n exec --no-startup-id $I3_SCRIPTS/empty_workspace
+bindsym $mod+Shift+n exec --no-startup-id $scripts/empty_workspace
 
 # Multiple monitor bindings
 bindsym --release $mod+r move workspace to output right; focus output primary
 
 # Multimedia Keys
 ## New volumn configuration for Kinesis keyboard
-bindsym $mod+minus exec --no-startup-id $I3_SCRIPTS/volume_brightness.sh volume_mute
-bindsym $mod+backslash exec --no-startup-id $I3_SCRIPTS/volume_brightness.sh volume_up 5
-bindsym $mod+apostrophe exec --no-startup-id $I3_SCRIPTS/volume_brightness.sh volume_down 5
-bindsym $mod+Shift+backslash exec --no-startup-id $I3_SCRIPTS/volume_brightness.sh volume_up
-bindsym $mod+Shift+apostrophe exec --no-startup-id $I3_SCRIPTS/volume_brightness.sh volume_down
+bindsym $mod+minus exec --no-startup-id $scripts/volume_brightness.sh volume_mute
+bindsym $mod+backslash exec --no-startup-id $scripts/volume_brightness.sh volume_up 5
+bindsym $mod+apostrophe exec --no-startup-id $scripts/volume_brightness.sh volume_down 5
+bindsym $mod+Shift+backslash exec --no-startup-id $scripts/volume_brightness.sh volume_up
+bindsym $mod+Shift+apostrophe exec --no-startup-id $scripts/volume_brightness.sh volume_down
 
 # toggle between headphones and speakers
-bindsym $mod+a exec --no-startup-id $I3_SCRIPTS/audio_manager.sh -t
+bindsym $mod+a exec --no-startup-id $scripts/audio_manager.sh -t
 
 # use meta keys showing osc using dunst
-bindsym XF86AudioRaiseVolume exec --no-startup-id $I3_SCRIPTS/volume_brightness.sh volume_up
-bindsym XF86AudioLowerVolume exec --no-startup-id $I3_SCRIPTS/volume_brightness.sh volume_down
+bindsym XF86AudioRaiseVolume exec --no-startup-id $scripts/volume_brightness.sh volume_up
+bindsym XF86AudioLowerVolume exec --no-startup-id $scripts/volume_brightness.sh volume_down
 
 # gradular volume control
 bindsym $mod+XF86AudioRaiseVolume exec --no-startup-id amixer -D pulse sset Master 1%+ && pkill -RTMIN+1 i3blocks
@@ -247,7 +252,7 @@ bindsym $mod+XF86AudioLowerVolume exec --no-startup-id amixer -D pulse sset Mast
 
 # mute
 # use meta keys showing osc using dunst
-bindsym XF86AudioMute exec --no-startup-id $I3_SCRIPTS/volume_brightness.sh volume_mute
+bindsym XF86AudioMute exec --no-startup-id $scripts/volume_brightness.sh volume_mute
 
 # mic mute toggle
 bindsym XF86AudioMicMute exec amixer sset Capture toggle
@@ -269,7 +274,7 @@ bindsym $mod+Ctrl+Shift+p exec --no-startup-id playerctl previous
 # bindsym $mod+w exec --no-startup-id /usr/bin/zen-browser
 bindsym $mod+w exec --no-startup-id /usr/bin/helium-browser
 bindsym $mod+n exec --no-startup-id /usr/bin/thunar
-bindsym $mod+Shift+s exec --no-startup-id flameshot screen -r > ~/Pictures/Screenshots/$(date +"%Y-%m-%d-%T")-screenshot.png && notify-send "Screenshot saved to ~/Pictures/Screenshots/$(date +"%Y-%m-%d-%T")-screenshot.png"
+bindsym $mod+Shift+s exec --no-startup-id flameshot screen -r > $screenshots/$(date +"%Y-%m-%d-%T")-screenshot.png && notify-send "Screenshot saved to $screenshots/$(date +"%Y-%m-%d-%T")-screenshot.png"
 bindsym $mod+m exec --no-startup-id prismlauncher
 
 bindsym $mod+$alt+h exec --no-startup-id dunstctl history-pop
@@ -343,7 +348,7 @@ for_window [instance="libreoffice"] focus
 # picom: https://wiki.archlinux.org/title/Picom
 # for custom config:
 # --no-frame-pacing was added due to a bug I (James) was dealing with 
-exec_always --no-startup-id picom --no-frame-pacing --config  ~/.config/picom.conf
+exec_always --no-startup-id picom --no-frame-pacing --config  $config/picom.conf
 
 #############################################
 # autostart applications/services on login: #
@@ -376,7 +381,7 @@ exec --no-startup-id xrandr --output DP-2 --primary
 exec --no-startup-id xrandr --output DP-4 --right-of DP-2
 
 # set wallpaper
-exec --no-startup-id sleep 1 && feh --bg-fill ~/.config/i3/isle_of_the_dead.jpg
+exec --no-startup-id sleep 1 && feh --bg-fill $config/i3/isle_of_the_dead.jpg
 
 # set powersavings for display:
 exec --no-startup-id xset s 900 dpms 600 600 600
@@ -386,7 +391,7 @@ exec --no-startup-id caffene
 #exec --no-startup-id xset -dpms
 
 # Desktop notifications
-exec --no-startup-id /usr/bin/dunst --config ~/.config/dunst/dunstrc
+exec --no-startup-id /usr/bin/dunst --config $config/dunst/dunstrc
 # may need to run dbus-launch explicitly: 
 #exec --no-startup-id dbus-launch /usr/bin/dunst
 
@@ -477,7 +482,7 @@ client.urgent		    	$urgentred	$urgentred	$white		$yellowbrown	$yellowbrown
 bar {
 		font pango: Go Mono Regular 8
         separator_symbol "||"
-		status_command i3blocks -c ~/.config/i3/i3blocks.conf 
+		status_command i3blocks -c $config/i3/i3blocks.conf 
 		position top
 		tray_output primary
 		tray_padding 0
@@ -499,5 +504,5 @@ bar {
 
 # bindsym $mod+d exec --no-startup-id dmenu_run -i -nb '#000000' -nf '#ffffff' -sb '#969696' -sf '#000000' -fn 'GoMono:pixelsize=13'
 bindsym $mod+d exec --no-startup-id rofi -modi drun -show drun \
-		-theme ~/.config/rofi/drunstyle.rasi
+		-theme $config/rofi/drunstyle.rasi
 

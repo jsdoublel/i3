@@ -21,7 +21,7 @@ print_sink() {
 	else
 		printf "%3.2d%% Speakers  \n\n" "$(volume $SPEAKER)"
 	fi
-	[[ "$(pactl get-sink-mute @DEFAULT_SINK@)" = "Mute: yes" ]] && echo '#BF616A'
+	[[ "$(pactl get-sink-mute @DEFAULT_SINK@)" = "Mute: yes" ]] && echo '#D70000'
 }
 
 switch_to_sink() {
