@@ -5,7 +5,7 @@
 SPEAKER="alsa_output.pci-0000_12_00.0.analog-stereo"
 HEADPHONES="alsa_output.pci-0000_17_00.6.analog-stereo"
 MICROPHONE="alsa_input.pci-0000_17_00.6.analog-stereo"
-BLUETOOTH="bluez_output.E4_58_BC_2C_E3_F1.1"
+BLUETOOTH="bluez_output.E4:58:BC:2C:E3:F1"
 BLUEPHONE="bluez_input.E4:58:BC:2C:E3:F1"
 
 volume() {

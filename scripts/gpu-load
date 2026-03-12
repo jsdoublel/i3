@@ -44,11 +44,11 @@ GetOptions("help|h" => \&help,
 if ($gpu_brand eq "NVIDIA") {
     open (NVS, 'nvidia-settings -q GPUUtilization -t |') or die;
     while (<NVS>) {
-        if (/^[a-zA-Z]*=(\d+), [a-zA-Z]*=(\d+), [a-zA-Z]*=(\d+), [a-zA-Z]*=(\d+)$/) {
+        if (/graphics=(\d+), memory=(\d+), video=(\d+)(?:, pcie=(\d+))?/) {
             $gpu_usage = $1;
             $gpu_mem = $2;
             $gpu_video = $3;
-            $gpu_pcie = $4;
+            $gpu_pcie = $4 // 0;
             last;
         }
     }

@@ -23,7 +23,7 @@ print_status() {
 	[[ ! -z "$album" ]] && (( ${#artist} + ${#title} < MAX_LEN ))  && printf " [%s]" "$album"
 	printf '<span foreground="#FFFFFF"> ||</span>'
 	printf "\n\n"
-	[[ $status = "Paused" ]] && echo '#BF616A'
+	[[ $status = "Paused" ]] && echo '#D70000'
 }
 
 print_status
