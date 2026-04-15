@@ -45,7 +45,7 @@ default_border pixel 3
 # hide_edge_borders both
 
 # Set inner/outer gaps
-gaps inner 8
+# gaps inner 8
 
 # show window title bars (not officially supported with i3gaps)
 # default_border normal
@@ -271,8 +271,8 @@ bindsym $mod+Ctrl+Shift+p exec --no-startup-id playerctl previous
 ## App shortcuts
 # bindsym $mod+w exec --no-startup-id /usr/bin/google-chrome-stable
 # bindsym $mod+w exec --no-startup-id /usr/bin/firefox
-# bindsym $mod+w exec --no-startup-id /usr/bin/helium-browser
-bindsym $mod+w exec --no-startup-id /usr/bin/zen-browser
+bindsym $mod+w exec --no-startup-id /usr/bin/helium-browser
+# bindsym $mod+w exec --no-startup-id /usr/bin/zen-browser
 bindsym $mod+n exec --no-startup-id /usr/bin/thunar
 bindsym $mod+Shift+s exec --no-startup-id flameshot screen -r > $screenshots/$(date +"%Y-%m-%d-%T")-screenshot.png && notify-send "Screenshot saved to $screenshots/$(date +"%Y-%m-%d-%T")-screenshot.png"
 bindsym $mod+m exec --no-startup-id prismlauncher
@@ -322,6 +322,7 @@ assign [class="PrismLauncher"] $ws5
 assign [class="(?i)zoom"] $ws6
 assign [class="(?i)thunderbird"] $ws7
 assign [class="Slack"] $ws9
+assign [class="qBittorrent"] $ws4
 
 # automatic set focus new window if it opens on another workspace than the current:
 for_window [class=kitty] focus
@@ -336,6 +337,7 @@ for_window [class=(?i)minecraft] focus
 for_window [class=(?i)code] focus
 for_window [class=(?i)jetbrains-studio] focus
 for_window [class=(?i)thunderbird] focus
+for_window [class="qBittorrent"] focus
 for_window [class="Slack"] focus
 for_window [instance="libreoffice"] move container to workspace $ws4
 for_window [instance="libreoffice"] focus
