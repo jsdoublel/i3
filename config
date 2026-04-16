@@ -45,7 +45,7 @@ default_border pixel 3
 # hide_edge_borders both
 
 # Set inner/outer gaps
-# gaps inner 8
+gaps inner 6
 
 # show window title bars (not officially supported with i3gaps)
 # default_border normal
@@ -456,19 +456,20 @@ for_window [class="urxvt"] border pixel 1
 ######################################
 
 # Define colors variables:
+set $lack			#708090
 set $darkblue		#08052b
 set $urgentred		#d70000
 set $white			#ffffff
 set $black			#000000
 set $darkgrey		#191919
 set $grey			#444444
-set $mediumgrey		#555555
+set $mediumgrey		#7a7a7a
 set $lightgrey		#aaaaaa
 set $yellowbrown	#ffaa88
 
 # define colors for windows:
 #class						border		bground		text		indicator		child_border
-client.focused		    	$lightgrey	$lightgrey	$black		$lightgrey		$lightgrey
+client.focused		    	$mediumgrey		$mediumgrey		$black		$mediumgrey			$mediumgrey
 client.unfocused	    	$darkgrey	$darkgrey	$grey		$darkgrey		$darkgrey
 client.focused_inactive		$darkgrey	$black		$grey		$darkgrey		$darkgrey
 client.urgent		    	$urgentred	$urgentred	$white		$yellowbrown	$yellowbrown
